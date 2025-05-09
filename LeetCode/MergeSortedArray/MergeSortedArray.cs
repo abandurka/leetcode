@@ -1,6 +1,6 @@
-﻿namespace TwoSum;
+﻿namespace LeetCode;
 
-public class MergeSortedArray
+public partial class MergeSortedArray
 {
     public static IEnumerable<int> MergeWithList(int[] num, int[] mum)
     {
@@ -30,6 +30,35 @@ public class MergeSortedArray
 
         return r;
     }
+    
+    public static IEnumerable<int> MergeWithArray(int[] num, int[] mum)
+    {
+        var currN = 0;
+        var currM = 0;
+
+        var r = new int[num.Length + mum.Length];
+        for (int i = 0; i < num.Length + mum.Length; i++)
+        {
+            if (currN >= num.Length)
+            {
+                r[i] = mum[currM++];
+                continue;
+            }
+
+            if (currM >= mum.Length)
+            {
+                r[i] = num[currN++];
+                continue;
+            }
+
+            r[i] = num[currN] > mum[currM] 
+                ? mum[currM++] 
+                : num[currN++];
+        }
+
+        return r;
+    }
+
     
     public static IEnumerable<int> MergeWithYield(int[] num, int[] mum)
     {

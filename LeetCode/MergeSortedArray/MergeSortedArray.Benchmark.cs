@@ -1,27 +1,20 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
-namespace TwoSum;
+namespace LeetCode;
 
-public class Program
+public partial class MergeSortedArray
 {
-    static void Main(string[] args)
-    {
-        BenchmarkDotNet.Running.BenchmarkRunner.Run<MergeBenchmark>();
-    }
-    
-    
     [SimpleJob(RuntimeMoniker.Net90)]
     [MemoryDiagnoser]
     [MarkdownExporter]
-    public class MergeBenchmark
+    public class Benchmark
     {
-        [Params(10_000)]
-        public int N;
+        [Params(10_000)] public int N;
 
         private int[] num;
         private int[] mum;
-        
+
         [GlobalSetup]
         public void Setup()
         {
@@ -33,6 +26,7 @@ public class Program
                 num[i] = r.Next(N);
                 mum[i] = r.Next(N);
             }
+
             Array.Sort(num);
             Array.Sort(num);
         }
@@ -51,6 +45,26 @@ public class Program
         public void MergeWithYield()
         {
             var r = MergeSortedArray.MergeWithYield(num, mum);
+            foreach (var i in r)
+            {
+                //
+            }
+        }
+
+        [Benchmark]
+        public void MergeWithYieldToList()
+        {
+            var r = MergeSortedArray.MergeWithYield(num, mum).ToList();
+            foreach (var i in r)
+            {
+                //
+            }
+        }
+
+        [Benchmark]
+        public void MergeWithArray()
+        {
+            var r = MergeSortedArray.MergeWithArray(num, mum);
             foreach (var i in r)
             {
                 //
